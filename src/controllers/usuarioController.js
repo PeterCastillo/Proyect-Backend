@@ -1,0 +1,56 @@
+import { Usuario } from "../models/usuarioModel.js";
+import bcryptjs from "bcryptjs";
+
+
+export const registro = async (req, res) => {
+  const data = req.body;
+  try {
+    const validaroCorreo = await Usuario.findOne({ correo: data.correo });
+    if (validaroCorreo) {
+      return res.status(409).json({
+        message: "Correo registrado",
+      });
+    }
+    const contrasena = bcryptjs.hashSync(data.contrasena, 10);
+    const nuevoUsuario = await Usuario.create({
+      ...data,
+      contrasena,
+    });
+    res.status(201).json({
+      message: "Usuario creado exitosamente",
+      content: nuevoUsuario,
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "Error al crear el usuario",
+      content: e.message,
+    });
+  }
+};
+
+export const login = async (req, res) => {
+  const data = req.body;
+  try {
+    const usuario = await Usuario.findOne({ correo: data.correo });
+    if (!usuario) {
+      return res.status(404).json({
+        message: "Usuario no encontrado",
+      });
+    }
+    if (bcryptjs.compareSync(data.contrasena, usuario.contrasena)) {
+        return res.status(200).json({
+        message: "Binenvenido usuario",
+        content: usuario,
+      });
+    } else {
+        return res.status(409).json({
+        message: "Contraseña incorrecta",
+      });
+    }
+  } catch (e) {
+    res.status(500).json({
+      message: "Error al logear el usuario",
+      content: e.message,
+    });
+  }
+};
