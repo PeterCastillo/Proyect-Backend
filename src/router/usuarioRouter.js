@@ -46,6 +46,6 @@ export const usuarioRouter = Router();
  *                  
  */
 
-
+    
 usuarioRouter.post("/registro", registro);
 usuarioRouter.post("/login", login);

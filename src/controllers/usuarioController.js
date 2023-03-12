@@ -1,6 +1,6 @@
 import { Usuario } from "../models/usuarioModel.js";
 import bcryptjs from "bcryptjs";
-
+import jwt from "jsonwebtoken"
 
 export const registro = async (req, res) => {
   const data = req.body;
@@ -37,13 +37,13 @@ export const login = async (req, res) => {
         message: "Usuario no encontrado",
       });
     }
-    if (bcryptjs.compareSync(data.contrasena, usuario.contrasena)) {
-        return res.status(200).json({
+    if (bcryptjs.compareSync(data.contrasena, usuario.contrasena)) {  
+      return res.status(200).json({
         message: "Binenvenido usuario",
         content: usuario,
       });
     } else {
-        return res.status(409).json({
+      return res.status(409).json({
         message: "Contraseña incorrecta",
       });
     }
