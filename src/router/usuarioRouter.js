@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { login, registro } from "../controllers/usuarioController.js";
+import { validadorToken } from "../utils/validadorToken.js";
 
 export const usuarioRouter = Router();
 
@@ -31,6 +32,8 @@ export const usuarioRouter = Router();
  * @swagger
  * /registro:
  *  post:
+ *      security:
+ *          - Authorization: []
  *      summary: registrar un nuevo usuario
  *      tags: [Usuario]    
  *      requestBody:
@@ -46,6 +49,35 @@ export const usuarioRouter = Router();
  *                  
  */
 
+/**
+ * @swagger
+ * /login:
+ *  post:
+ *      summary: logear un usuario
+ *      tags: [Usuario]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:             
+ *                      type: object
+ *                      properties:
+ *                          correo:
+ *                              type: string
+ *                          contraseña:
+ *                              type: string
+ *                      example:
+ *                          correo: jackcc@gmail.com
+ *                          contrasena: peter2002
+ *      responses:
+ *          200:
+ *              description: bienvenido usuario
+ *          404: 
+ *              description: usuario no encontrado
+ *          409:
+ *              description: contraseña incorrecta
+ *                      
+ */
     
-usuarioRouter.post("/registro", registro);
+usuarioRouter.post("/registro", validadorToken, registro);
 usuarioRouter.post("/login", login);

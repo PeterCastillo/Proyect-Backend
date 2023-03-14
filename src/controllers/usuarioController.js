@@ -1,6 +1,6 @@
 import { Usuario } from "../models/usuarioModel.js";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 export const registro = async (req, res) => {
   const data = req.body;
@@ -37,10 +37,26 @@ export const login = async (req, res) => {
         message: "Usuario no encontrado",
       });
     }
-    if (bcryptjs.compareSync(data.contrasena, usuario.contrasena)) {  
+    if (bcryptjs.compareSync(data.contrasena, usuario.contrasena)) {
+      const token = jwt.sign(
+        {
+          id: usuario._id,
+          nombre: usuario.nombre,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
       return res.status(200).json({
         message: "Binenvenido usuario",
-        content: usuario,
+        content: {
+          id: usuario._id,
+          nombre: usuario.nombre,
+          correo: usuario.correo,
+          accesos: usuario.accesos,
+          token: token,
+        },
       });
     } else {
       return res.status(409).json({

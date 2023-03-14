@@ -25,6 +25,16 @@ const swaggerOptions = {
         },
       ],
     },
+    components: {
+      securitySchemes: {
+        Authorization: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          value: "Bearer <JWT token here>",
+        },
+      },
+    },
   },
   apis: [`${path.join(__dirname, "./router/*.js")}`],
 };
@@ -32,7 +42,11 @@ const swaggerOptions = {
 const servidor = express();
 const PORT = process.env.PORT ?? 5000;
 
-servidor.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerJSDoc(swaggerOptions)));
+servidor.use(
+  "/api-docs",
+  SwaggerUi.serve,
+  SwaggerUi.setup(swaggerJSDoc(swaggerOptions))
+);
 // La aplicacion entendera los json provenientes del cliente
 servidor.use(express.json());
 servidor.use(usuarioRouter);
