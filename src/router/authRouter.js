@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { login, registro } from "../controllers/usuarioController.js";
+import {
+  login,
+  registro,
+} from "../controllers/usuarioController.js";
 import { validadorToken } from "../utils/validadorToken.js";
 
-export const usuarioRouter = Router();
+export const authRouter = Router();
 
-//crear usuario
 /**
  * @swagger
  * components:
@@ -18,24 +20,23 @@ export const usuarioRouter = Router();
  *                  type: string
  *              contrasena:
  *                  type: string
- *              accesos: 
+ *              accesos:
  *                  type:  array
  *          example:
  *              nombre: Peter Castillo
  *              correo: peterjackc@gmail.com
  *              contrasena: peter0202
- *              accesos: [] 
+ *              accesos: []
  */
-
 
 /**
  * @swagger
- * /registro:
+ * /auth/registro:
  *  post:
  *      security:
  *          - Authorization: []
- *      summary: registrar un nuevo usuario
- *      tags: [Usuario]    
+ *      summary: Registrar un nuevo Usuario
+ *      tags: [Usuario]
  *      requestBody:
  *          required: true
  *          content:
@@ -45,21 +46,21 @@ export const usuarioRouter = Router();
  *                      $ref: '#/components/schemas/Usuario'
  *      responses:
  *          201:
- *              description: nuevo usuario creado
- *                  
+ *              description: Nuevo usuario registrado
+ *
  */
 
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *  post:
- *      summary: logear un usuario
+ *      summary: Logear un Usuario
  *      tags: [Usuario]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
- *                  schema:             
+ *                  schema:
  *                      type: object
  *                      properties:
  *                          correo:
@@ -71,13 +72,13 @@ export const usuarioRouter = Router();
  *                          contrasena: peter2002
  *      responses:
  *          200:
- *              description: bienvenido usuario
- *          404: 
- *              description: usuario no encontrado
+ *              description: Bienvenido usuario
+ *          404:
+ *              description: Usuario no encontrado
  *          409:
- *              description: contraseña incorrecta
- *                      
+ *              description: Contraseña incorrecta
+ *
  */
-    
-usuarioRouter.post("/registro", validadorToken, registro);
-usuarioRouter.post("/login", login);
+
+authRouter.post("/auth/registro", validadorToken, registro);
+authRouter.post("/auth/login", login);

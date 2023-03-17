@@ -45,7 +45,7 @@ export const login = async (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "1h",
+          expiresIn: "12h",
         }
       );
       return res.status(200).json({
@@ -63,6 +63,21 @@ export const login = async (req, res) => {
         message: "Contraseña incorrecta",
       });
     }
+  } catch (e) {
+    res.status(500).json({
+      message: "Error al logear el usuario",
+      content: e.message,
+    });
+  }
+};
+
+export const getAllUsuarios = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find()
+    return res.status(200).json({
+      message: "Lista de usuarios",
+      content: usuarios
+    })
   } catch (e) {
     res.status(500).json({
       message: "Error al logear el usuario",

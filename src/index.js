@@ -3,8 +3,10 @@ import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import SwaggerUi from "swagger-ui-express";
 import * as path from "path";
-import { usuarioRouter } from "./router/usuarioRouter.js";
+import { authRouter } from "./router/authRouter.js";
+import { sucursalRouter } from "./router/sucursalRouter.js"
 import { fileURLToPath } from "url";
+import cors from "cors"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,8 +50,10 @@ servidor.use(
   SwaggerUi.setup(swaggerJSDoc(swaggerOptions))
 );
 // La aplicacion entendera los json provenientes del cliente
+servidor.use(cors())
 servidor.use(express.json());
-servidor.use(usuarioRouter);
+servidor.use(authRouter);
+servidor.use(sucursalRouter)
 
 servidor.listen(PORT, async () => {
   console.log(`Servidor Iniciado Correctamente en el Puerto: ${PORT}`);
