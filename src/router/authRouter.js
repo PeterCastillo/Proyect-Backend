@@ -1,8 +1,9 @@
 import { Router } from "express";
 import {
   login,
+  refreshToken,
   registro,
-} from "../controllers/usuarioController.js";
+} from "../controllers/authController.js";
 import { validadorToken } from "../utils/validadorToken.js";
 
 export const authRouter = Router();
@@ -82,3 +83,4 @@ export const authRouter = Router();
 
 authRouter.post("/auth/registro", validadorToken, registro);
 authRouter.post("/auth/login", login);
+authRouter.post("/auth/refresh", refreshToken)

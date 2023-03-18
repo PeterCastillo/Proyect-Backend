@@ -45,7 +45,7 @@ export const login = async (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "12h",
+          expiresIn: "1d",
         }
       );
       return res.status(200).json({
@@ -55,6 +55,7 @@ export const login = async (req, res) => {
           nombre: usuario.nombre,
           correo: usuario.correo,
           accesos: usuario.accesos,
+          contrasena: usuario.contrasena,
           token: token,
         },
       });
@@ -71,16 +72,34 @@ export const login = async (req, res) => {
   }
 };
 
-export const getAllUsuarios = async (req, res) => {
+export const refreshToken = async (req, res) => {
+  const data = req.body;
   try {
-    const usuarios = await Usuario.find()
-    return res.status(200).json({
-      message: "Lista de usuarios",
-      content: usuarios
-    })
+    const usuario = await Usuario.findOne({ correo: data.correo });
+    if (usuario) {
+      const token = jwt.sign(
+        {
+          id: usuario._id,
+          nombre: usuario.nombre,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1d",
+        }
+      );
+      return res.status(200).json({
+        message: "Nuevo token",
+        content: {
+          refresedToken: token,
+        },
+      });
+    }
+    res.status(404).json({
+      message: "Usuario no encontrado",
+    });
   } catch (e) {
     res.status(500).json({
-      message: "Error al logear el usuario",
+      message: "Error al refrescar token",
       content: e.message,
     });
   }
