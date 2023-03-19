@@ -23,6 +23,10 @@ const usuarioSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true
     },
+    sucursal: {
+        type: mongoose.Schema.Types.String,
+        required: true
+    },
     accesos: [usuarioAccesoSchema]
 },{
     timestamps: {

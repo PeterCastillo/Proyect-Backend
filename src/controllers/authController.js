@@ -56,6 +56,7 @@ export const login = async (req, res) => {
           correo: usuario.correo,
           accesos: usuario.accesos,
           contrasena: usuario.contrasena,
+          sucursal: usuario.sucursal,
           token: token,
         },
       });
