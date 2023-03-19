@@ -12,6 +12,22 @@ export const authRouter = Router();
  * @swagger
  * components:
  *  schemas:
+ *      Token:  
+ *        type: object
+ *        properties:
+ *          token: 
+ *            type: string
+ *        example:
+ *          token:
+ *            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDhmYmFkYzJhMGRkNTQ5ZTk1MDFhYiIsIm5vbWJyZSI6InBldGZlciIsImlhdCI6MTY3OTE4Mjc1MiwiZXhwIjoxNjc5MjY5MTUyfQ.jv9raBd8T6IWDSJja2PTGWMMuEAApKRfU72V_2PCWk
+ *      Usuario_id:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            tpye: string
+ *        example:
+ *          _id: 
+ *            6408fbadc2a0dd549e9501ab
  *      Usuario:
  *          type: object
  *          properties:
@@ -37,18 +53,31 @@ export const authRouter = Router();
  *      security:
  *          - Authorization: []
  *      summary: Registrar un nuevo Usuario
- *      tags: [Usuario]
+ *      tags: [Auth]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/schemas/Usuario'
+ *                      allOf:
+ *                        - $ref: '#/components/schemas/Usuario'
  *      responses:
  *          201:
  *              description: Nuevo usuario registrado
- *
+ *              content:
+ *                appplication/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      message: 
+ *                        type: string
+ *                        example: Binenvenido usuario
+ *                      content:
+ *                        type: object
+ *                        allOf:
+ *                          - $ref: '#/components/schemas/Usuario_id'
+ *                          - $ref: '#/components/schemas/Usuario' 
  */
 
 /**
@@ -56,7 +85,7 @@ export const authRouter = Router();
  * /auth/login:
  *  post:
  *      summary: Logear un Usuario
- *      tags: [Usuario]
+ *      tags: [Auth]
  *      requestBody:
  *          required: true
  *          content:
@@ -74,6 +103,20 @@ export const authRouter = Router();
  *      responses:
  *          200:
  *              description: Bienvenido usuario
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      message: 
+ *                        type: string
+ *                        example: Binenvenido usuario
+ *                      content:
+ *                        type: object
+ *                        allOf:
+ *                        - $ref: '#/components/schemas/Usuario_id' 
+ *                        - $ref: '#/components/schemas/Usuario'  
+ *                        - $ref: '#/components/schemas/Token'  
  *          404:
  *              description: Usuario no encontrado
  *          409:
@@ -81,6 +124,44 @@ export const authRouter = Router();
  *
  */
 
+/**
+ * @swagger
+ * /auth/refresh:
+ *  post:
+ *      summary: Refrescar Token
+ *      tags: [Auth]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                correo:
+ *                  type: string
+ *              example:
+ *                correo: jackcc@gmail.com
+ *      responses:
+ *        200:
+ *          description: Nuevo Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                  content:
+ *                    type: object
+ *                    properties:
+ *                      refresedToken:
+ *                        type: string
+ *                example:
+ *                  message: Nuevo token
+ *                  content:
+ *                    refresedToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDhmYmFkYzJhMGRkNTQ5ZTk1MDFhYiIsIm5vbWJyZSI6InBldGZlciIsImlhdCI6MTY3OTE4Mjc1MiwiZXhwIjoxNjc5MjY5MTUyfQ.jv9raBd8T6IWDSJja2PTGWMMuEAApKRfU72V_2PCWk
+ */
+
 authRouter.post("/auth/registro", validadorToken, registro);
 authRouter.post("/auth/login", login);
-authRouter.post("/auth/refresh", refreshToken)
+authRouter.post("/auth/refresh", refreshToken);

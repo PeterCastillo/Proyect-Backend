@@ -55,11 +55,17 @@ export const sucursalRouter = Router();
  *              content:
  *                  application/json:
  *                      schema:
- *                           type: array
- *                           items:
+ *                        type: object
+ *                        properties:
+ *                          message:
+ *                            type: string
+ *                            example: Lista de sucursales
+ *                          content:
+ *                            type: array
+ *                            items:
  *                              allOf:
- *                                  - $ref: '#/components/schemas/Sucursal_id'
- *                                  - $ref: '#/components/schemas/Sucursal'
+ *                                - $ref: '#/components/schemas/Sucursal_id'
+ *                                - $ref: '#/components/schemas/Sucursal'
  */
 
 /**
@@ -76,9 +82,15 @@ export const sucursalRouter = Router();
  *              content:
  *                  application/json:
  *                      schema:
- *                          type: array
- *                          items:
- *                              allOf:
+ *                          type: object
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Lista de sucursales activas
+ *                            content:
+ *                              type: array
+ *                              items:
+ *                                allOf:
  *                                  - $ref: '#/components/schemas/Sucursal_id'
  *                                  - $ref: '#/components/schemas/Sucursal'
  */
@@ -105,7 +117,13 @@ export const sucursalRouter = Router();
  *                  application/json:
  *                      schema:
  *                          type: object
- *                          allOf:
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Sucursal obtenida
+ *                            content:
+ *                              type: object
+ *                              allOf:
  *                               - $ref: '#/components/schemas/Sucursal_id'
  *                               - $ref: '#/components/schemas/Sucursal'
  *
@@ -138,9 +156,15 @@ export const sucursalRouter = Router();
  *                  application/json:
  *                      schema:
  *                          type: object
- *                          allOf:
- *                               - $ref: '#/components/schemas/Sucursal_id'
- *                               - $ref: '#/components/schemas/Sucursal'
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Sucursal creada
+ *                            content:
+ *                              type: object
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Sucursal_id'
+ *                                - $ref: '#/components/schemas/Sucursal'
  */
 
 /**
@@ -179,9 +203,15 @@ export const sucursalRouter = Router();
  *                  application/json:
  *                      schema:
  *                          type: object
- *                          allOf:
- *                               - $ref: '#/components/schemas/Sucursal_id'
- *                               - $ref: '#/components/schemas/Sucursal'
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Sucursal actuzalizada
+ *                            content:
+ *                              type: object
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Sucursal_id'
+ *                                - $ref: '#/components/schemas/Sucursal'
  */
 
 /**
@@ -202,6 +232,14 @@ export const sucursalRouter = Router();
  *      responses:
  *          200:
  *              description: Sucursal eliminada
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      message:
+ *                        type: string
+ *                        example: Sucursal borrada
  *
  */
 
