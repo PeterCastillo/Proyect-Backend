@@ -52,6 +52,15 @@ export const getById = async (req, res) => {
 export const create = async (req, res) => {
   const sucursal = req.body;
   try {
+    const sucursales = await Sucursal.find()
+    for (let index = 0; index < sucursales.length; index++) {
+      const element = sucursales[index];
+      if(element.ubicacion == sucursal.ubicacion && element.sucursal == sucursal.sucursal){
+        return res.status(409).json({
+          message: "Sucursal Existente"
+        })
+      }
+    }
     const newSucursal = await Sucursal.create(sucursal);
     return res.status(201).json({
       message: "Sucursal creada",
