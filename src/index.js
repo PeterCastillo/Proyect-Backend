@@ -5,6 +5,7 @@ import SwaggerUi from "swagger-ui-express";
 import * as path from "path";
 import { authRouter } from "./router/authRouter.js";
 import { sucursalRouter } from "./router/sucursalRouter.js"
+import { usuarioRouter } from "./router/usuarioRouter.js"
 import { fileURLToPath } from "url";
 import cors from "cors"
 
@@ -54,6 +55,7 @@ servidor.use(cors())
 servidor.use(express.json());
 servidor.use(authRouter);
 servidor.use(sucursalRouter)
+servidor.use(usuarioRouter)
 
 servidor.listen(PORT, async () => {
   console.log(`Servidor Iniciado Correctamente en el Puerto: ${PORT}`);

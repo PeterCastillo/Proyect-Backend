@@ -1,0 +1,294 @@
+import { Router } from "express";
+import { validadorToken } from "../utils/validadorToken.js";
+import {
+  getAll,
+  getAllActivatedBySucursal,
+  getById,
+  create,
+  eliminate,
+  update,
+  getAllBySucursal,
+} from "../controllers/usuarioController.js";
+
+export const usuarioRouter = Router();
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Usuario_id:
+ *          type: object
+ *          properties:
+ *              _id:
+ *                  type: string
+ *          example:
+ *              _id:
+ *                  6408fbadc2a0dd549e9501ab
+ *      Usuario:
+ *          type: object
+ *          properties:
+ *              nombre:
+ *                  type: string
+ *              correo:
+ *                  type: string
+ *              contrasena:
+ *                  type: boolean
+ *              sucursal:
+ *                  type: string
+ *              accesos:
+ *                  type: array
+ *                  items:
+ *                      type: string
+ *          example:
+ *              nombre:
+ *                  Peter Castillo
+ *              correo:
+ *                  peterjackcc@gmail.com
+ *              constrasena:
+ *                  peter0022
+ *              sucursal:
+ *                  6408fbadc2a0dd549e9501ab
+ *              accesos: ["usuarios", "mesas", "platillos"]
+ */
+
+/**
+ * @swagger
+ * /usuarios:
+ *  get:
+ *      security:
+ *          - Authorization: []
+ *      summary: Obtener lista de Usuarios
+ *      tags: [Usuario]
+ *      responses:
+ *          200:
+ *              description: Lista de Sucursales
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                        type: object
+ *                        properties:
+ *                          message:
+ *                            type: string
+ *                            example: Lista de Usuarios
+ *                          content:
+ *                            type: array
+ *                            items:
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Usuario_id'
+ *                                - $ref: '#/components/schemas/Usuario'
+ */
+
+/**
+ * @swagger
+ * /usuarios/{sucursal}:
+ *  get:
+ *      security:
+ *          - Authorization: []
+ *      summary: Obtener lista de Usuarios Activos
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: sucursal
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: sucursal_id
+ *      responses:
+ *          200:
+ *              description: Lista de Usuarios Activos
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Lista de usuarios activos
+ *                            content:
+ *                              type: array
+ *                              items:
+ *                                allOf:
+ *                                  - $ref: '#/components/schemas/Usuario_id'
+ *                                  - $ref: '#/components/schemas/Usuario'
+ */
+
+/**
+ * @swagger
+ * /usuarios_activos/{sucursal}:
+ *  get:
+ *      security:
+ *          - Authorization: []
+ *      summary: Obtener lista de Usuarios Activos
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: sucursal
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: sucursal_id
+ *      responses:
+ *          200:
+ *              description: Lista de Usuarios Activos
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Lista de usuarios activos
+ *                            content:
+ *                              type: array
+ *                              items:
+ *                                allOf:
+ *                                  - $ref: '#/components/schemas/Usuario_id'
+ *                                  - $ref: '#/components/schemas/Usuario'
+ */
+
+/**
+ * @swagger
+ * /usuarios/{usuario}:
+ *  get:
+ *      security:
+ *          - Authorization: []
+ *      summary: Obtener Usuario
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: usuario
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: usuario_ID
+ *      responses:
+ *          200:
+ *              description: Usuario
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Usuario obtenido
+ *                            content:
+ *                              type: object
+ *                              allOf:
+ *                               - $ref: '#/components/schemas/Usuario_id'
+ *                               - $ref: '#/components/schemas/Usuario'
+ *
+ *
+ */
+
+/**
+ * @swagger
+ * /usuarios:
+ *  post:
+ *      security:
+ *          - Authorization: []
+ *      summary: Crear un Usuario
+ *      tags: [Usuario]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      $ref: '#/components/schemas/Usuario'
+ *      responses:
+ *          201:
+ *              description: Nuevo usuario registrado
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Usuario creado
+ *                            content:
+ *                              type: object
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Usuario_id'
+ *                                - $ref: '#/components/schemas/Usuario'
+ */
+
+/**
+ * @swagger
+ * /usuarios/{usuario}:
+ *  put:
+ *      security:
+ *          - Authorization: []
+ *      summary: Editar sucursal
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: usuario
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: usuario_id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      allOf:
+ *                          - $ref: '#/components/schemas/Usuario_id'
+ *                          - $ref: '#/components/schemas/Usuario'
+ *      responses:
+ *          200:
+ *              description: Usuario Actualizado
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                            message:
+ *                              type: string
+ *                              example: Usuario actuzalizado
+ *                            content:
+ *                              type: object
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Usuario_id'
+ *                                - $ref: '#/components/schemas/Usuario'
+ */
+
+/**
+ * @swagger
+ * /usuarios/{usuario}:
+ *  delete:
+ *      security:
+ *          - Authorization: []
+ *      summary: Eliminar Usuario
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: usuario
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: usuario_id
+ *      responses:
+ *          200:
+ *              description: Usuario eliminado
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      message:
+ *                        type: string
+ *                        example: Usuario borrado
+ *
+ */
+
+usuarioRouter.get("/usuarios", validadorToken, getAll);
+usuarioRouter.get("/usuarios/:sucursal", validadorToken, getAllBySucursal)
+usuarioRouter.get("/usuarios_activos/:sucursal", validadorToken, getAllActivatedBySucursal);
+usuarioRouter.get("/sucursales/:sucursal", validadorToken, getById);
+usuarioRouter.post("/sucursales", validadorToken, create);
+usuarioRouter.put("/sucursales/:sucursal", validadorToken, update);
+usuarioRouter.delete("/sucursales/:sucursal", validadorToken, eliminate);

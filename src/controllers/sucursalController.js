@@ -59,7 +59,7 @@ export const create = async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener sucursal",
+      message: "Error al crear sucursal",
       content: e.message,
     });
   }
@@ -80,7 +80,7 @@ export const update = async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener sucursal",
+      message: "Error al actualizar sucursal",
       content: e.message,
     });
   }
@@ -95,7 +95,7 @@ export const eliminate = async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener sucursal",
+      message: "Error al eliminar sucursal",
       content: e.message,
     });
   }
