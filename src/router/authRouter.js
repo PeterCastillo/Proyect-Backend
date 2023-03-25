@@ -4,54 +4,13 @@ import {
   refreshToken,
   registro,
 } from "../controllers/authController.js";
-import { validadorToken } from "../utils/validadorToken.js";
 
 export const authRouter = Router();
 
 /**
  * @swagger
- * components:
- *  schemas:
- *      Token:  
- *        type: object
- *        properties:
- *          token: 
- *            type: string
- *        example:
- *          token:
- *            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDhmYmFkYzJhMGRkNTQ5ZTk1MDFhYiIsIm5vbWJyZSI6InBldGZlciIsImlhdCI6MTY3OTE4Mjc1MiwiZXhwIjoxNjc5MjY5MTUyfQ.jv9raBd8T6IWDSJja2PTGWMMuEAApKRfU72V_2PCWk
- *      Usuario_id:
- *        type: object
- *        properties:
- *          _id:
- *            tpye: string
- *        example:
- *          _id: 
- *            6408fbadc2a0dd549e9501ab
- *      Usuario:
- *          type: object
- *          properties:
- *              nombre:
- *                  type: string
- *              correo:
- *                  type: string
- *              contrasena:
- *                  type: string
- *              accesos:
- *                  type:  array
- *          example:
- *              nombre: Peter Castillo
- *              correo: peterjackc@gmail.com
- *              contrasena: peter0202
- *              accesos: []
- */
-
-/**
- * @swagger
  * /auth/registro:
  *  post:
- *      security:
- *          - Authorization: []
  *      summary: Registrar un nuevo Usuario
  *      tags: [Auth]
  *      requestBody:
@@ -162,6 +121,6 @@ export const authRouter = Router();
  *                    refresedToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDhmYmFkYzJhMGRkNTQ5ZTk1MDFhYiIsIm5vbWJyZSI6InBldGZlciIsImlhdCI6MTY3OTE4Mjc1MiwiZXhwIjoxNjc5MjY5MTUyfQ.jv9raBd8T6IWDSJja2PTGWMMuEAApKRfU72V_2PCWk
  */
 
-authRouter.post("/auth/registro", validadorToken, registro);
+authRouter.post("/auth/registro", registro);
 authRouter.post("/auth/login", login);
 authRouter.post("/auth/refresh", refreshToken);

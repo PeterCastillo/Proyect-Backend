@@ -52,7 +52,7 @@ export const getById = async (req, res) => {
   try {
     const usuario = await Usuario.findById(usuarioId);
     if (!usuario) {
-      throw "La usuario no existe";
+      throw "El usuario no existe";
     }
     return res.status(200).json({
       message: "Usuario obtenido",

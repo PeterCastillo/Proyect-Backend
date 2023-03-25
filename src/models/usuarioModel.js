@@ -1,15 +1,5 @@
 import mongoose from "mongoose";
 
-const usuarioAccesoSchema = new mongoose.Schema({
-    acceso: {
-        alias: "acceso_usuario",
-        type: mongoose.Schema.Types.String,
-        required: true
-    }
-},{
-    _id: false
-})
-
 const usuarioSchema = new mongoose.Schema({
     nombre: {
         type: mongoose.Schema.Types.String,
@@ -27,7 +17,9 @@ const usuarioSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true
     },
-    accesos: [usuarioAccesoSchema]
+    accesos: {
+        type: [mongoose.Schema.Types.String]
+    }
 },{
     timestamps: {
         createdAt: false,

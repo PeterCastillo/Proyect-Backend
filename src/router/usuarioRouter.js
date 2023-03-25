@@ -4,11 +4,11 @@ import {
   getAll,
   getAllActivatedBySucursal,
   getById,
-  create,
   eliminate,
   update,
   getAllBySucursal,
 } from "../controllers/usuarioController.js";
+import { registro } from "../controllers/authController.js";
 
 export const usuarioRouter = Router();
 
@@ -16,6 +16,14 @@ export const usuarioRouter = Router();
  * @swagger
  * components:
  *  schemas:
+ *      Token:  
+ *        type: object
+ *        properties:
+ *          token: 
+ *            type: string
+ *        example:
+ *          token:
+ *            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDhmYmFkYzJhMGRkNTQ5ZTk1MDFhYiIsIm5vbWJyZSI6InBldGZlciIsImlhdCI6MTY3OTE4Mjc1MiwiZXhwIjoxNjc5MjY5MTUyfQ.jv9raBd8T6IWDSJja2PTGWMMuEAApKRfU72V_2PCWk
  *      Usuario_id:
  *          type: object
  *          properties:
@@ -44,7 +52,7 @@ export const usuarioRouter = Router();
  *                  Peter Castillo
  *              correo:
  *                  peterjackcc@gmail.com
- *              constrasena:
+ *              contrasena:
  *                  peter0022
  *              sucursal:
  *                  6408fbadc2a0dd549e9501ab
@@ -288,7 +296,7 @@ export const usuarioRouter = Router();
 usuarioRouter.get("/usuarios", validadorToken, getAll);
 usuarioRouter.get("/usuarios/:sucursal", validadorToken, getAllBySucursal)
 usuarioRouter.get("/usuarios_activos/:sucursal", validadorToken, getAllActivatedBySucursal);
-usuarioRouter.get("/sucursales/:sucursal", validadorToken, getById);
-usuarioRouter.post("/sucursales", validadorToken, create);
-usuarioRouter.put("/sucursales/:sucursal", validadorToken, update);
-usuarioRouter.delete("/sucursales/:sucursal", validadorToken, eliminate);
+usuarioRouter.get("/usuarios/:usuario", validadorToken, getById);
+usuarioRouter.post("/usuarios", validadorToken, registro);
+usuarioRouter.put("/usuarios/:usuario", validadorToken, update);
+usuarioRouter.delete("/usuarios/:usuario", validadorToken, eliminate);
