@@ -32,6 +32,8 @@ export const sucursalRouter = Router();
  *                  type: string
  *              estado:
  *                  type: boolean
+ *              empresa_id:
+ *                  type: string
  *          example:
  *              sucursal:
  *                  Tomas Valden
@@ -39,6 +41,8 @@ export const sucursalRouter = Router();
  *                  San Miguel av.401
  *              estado:
  *                  true
+ *              empresa_id:
+ *                  6408fbadc2a0dd549e9501ab
  */
 
 /**
@@ -144,11 +148,7 @@ export const sucursalRouter = Router();
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/Sucursal'
- *                  example:
- *                      sucursal: Toma Prado
- *                      ubicacion: San Miguel av.401
- *                      estado: true
+ *                      $ref: '#/components/schemas/Sucursal'
  *      responses:
  *          201:
  *              description: Nueva sucursal registrada
@@ -191,11 +191,6 @@ export const sucursalRouter = Router();
  *                      allOf:
  *                          - $ref: '#/components/schemas/Sucursal_id'
  *                          - $ref: '#/components/schemas/Sucursal'
- *                  example:
- *                      _id: 6408fbadc2a0dd549e9501ab
- *                      sucursal: Toma Prado
- *                      ubicacion: San Miguel av.401
- *                      estado: true
  *      responses:
  *          200:
  *              description: Sucursal Actualizada

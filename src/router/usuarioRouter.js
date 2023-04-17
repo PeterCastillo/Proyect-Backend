@@ -41,7 +41,7 @@ export const usuarioRouter = Router();
  *                  type: string
  *              contrasena:
  *                  type: boolean
- *              sucursal:
+ *              sucursal_id:
  *                  type: string
  *              accesos:
  *                  type: array
@@ -54,7 +54,7 @@ export const usuarioRouter = Router();
  *                  peterjackcc@gmail.com
  *              contrasena:
  *                  peter0022
- *              sucursal:
+ *              sucursal_id:
  *                  6408fbadc2a0dd549e9501ab
  *              accesos: ["usuarios", "mesas", "platillos"]
  */

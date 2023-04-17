@@ -12,7 +12,12 @@ const sucursalSchema = new mongoose.Schema({
     estado: {
         type: mongoose.Schema.Types.Boolean,
         require: true
-    }
+    },
+    empresa_id: {
+        type: mongoose.Schema.Types.Boolean,
+        require: true
+    },
+
 })
 
 export const Sucursal = mongoose.model('sucursales', sucursalSchema)

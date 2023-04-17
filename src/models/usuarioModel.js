@@ -13,7 +13,7 @@ const usuarioSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true
     },
-    sucursal: {
+    sucursal_id: {
         type: mongoose.Schema.Types.String,
         required: true
     },
