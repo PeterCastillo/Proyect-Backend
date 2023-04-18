@@ -1,8 +1,9 @@
-import { Usuario } from "../models/usuarioModel.js";
+import { Usuario } from "../models/usuarioModel";
+import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const registro = async (req, res) => {
+export const registro = async (req:Request, res:Response)  => {
   const data = req.body;
   try {
     const validaroCorreo = await Usuario.findOne({ correo: data.correo });
@@ -28,7 +29,7 @@ export const registro = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req:Request, res:Response)  => {
   const data = req.body;
   try {
     const usuario = await Usuario.findOne({ correo: data.correo });
@@ -43,7 +44,7 @@ export const login = async (req, res) => {
           id: usuario._id,
           nombre: usuario.nombre,
         },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET!,
         {
           expiresIn: "1d",
         }
@@ -56,7 +57,7 @@ export const login = async (req, res) => {
           correo: usuario.correo,
           accesos: usuario.accesos,
           contrasena: usuario.contrasena,
-          sucursal: usuario.sucursal,
+          sucursal_id: usuario.sucursal_id,
           token: token,
         },
       });
@@ -73,7 +74,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const refreshToken = async (req, res) => {
+export const refreshToken = async (req:Request, res:Response)  => {
   const data = req.body;
   try {
     const usuario = await Usuario.findOne({ correo: data.correo });
@@ -83,7 +84,7 @@ export const refreshToken = async (req, res) => {
           id: usuario._id,
           nombre: usuario.nombre,
         },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET!,
         {
           expiresIn: "1d",
         }

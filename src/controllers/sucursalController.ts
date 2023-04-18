@@ -1,6 +1,7 @@
-import { Sucursal } from "../models/sucursalModel.js";
+import { Sucursal } from "../models/sucursalModel";
+import { Request, Response } from "express";
 
-export const getAll = async (req, res) => {
+export const getAll = async (req:Request, res:Response)  => {
   try {
     const sucursales = await Sucursal.find();
     return res.status(200).json({
@@ -15,7 +16,7 @@ export const getAll = async (req, res) => {
   }
 };
 
-export const getAllActivated = async (req, res) => {
+export const getAllActivated = async (req:Request, res:Response)  => {
   try {
     const sucursales = await Sucursal.find({ estado: true });
     return res.status(200).json({
@@ -30,7 +31,7 @@ export const getAllActivated = async (req, res) => {
   }
 };
 
-export const getById = async (req, res) => {
+export const getById = async (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   try {
     const sucursal = await Sucursal.findById(sucursalId);
@@ -49,7 +50,7 @@ export const getById = async (req, res) => {
   }
 };
 
-export const create = async (req, res) => {
+export const create = async  (req:Request, res:Response) => {
   const sucursal = req.body;
   try {
     const sucursales = await Sucursal.find()
@@ -74,7 +75,7 @@ export const create = async (req, res) => {
   }
 };
 
-export const update = async (req, res) => {
+export const update = async  (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   const newInfosucursal = req.body;
   try {
@@ -95,10 +96,10 @@ export const update = async (req, res) => {
   }
 };
 
-export const eliminate = async (req, res) => {
+export const eliminate = async  (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   try {
-    const updatedSucursal = await Sucursal.findOneAndDelete(sucursalId);
+    const updatedSucursal = await Sucursal.findByIdAndDelete(sucursalId);
     return res.status(200).json({
       message: "Sucursal borrada",
     });

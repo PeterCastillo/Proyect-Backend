@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validadorToken } from "../utils/validadorToken.js";
+import { validadorToken } from "../middleware/validadorToken";
 import {
   getAll,
   getAllActivated,
@@ -7,7 +7,7 @@ import {
   create,
   eliminate,
   update,
-} from "../controllers/sucursalController.js";
+} from "../controllers/sucursalController";
 
 export const sucursalRouter = Router();
 

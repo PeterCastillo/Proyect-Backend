@@ -1,6 +1,7 @@
-import { Usuario } from "../models/usuarioModel.js";
+import { Usuario } from "../models/usuarioModel";
+import { Request, Response } from "express";
 
-export const getAll = async (req, res) => {
+export const getAll = async (req: Request, res: Response) => {
   try {
     const usuarios = await Usuario.find();
     return res.status(200).json({
@@ -15,7 +16,7 @@ export const getAll = async (req, res) => {
   }
 };
 
-export const getAllBySucursal = async (req, res) => {
+export const getAllBySucursal = async (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   try {
     const usuarios = await Usuario.find({ sucursal: sucursalId });
@@ -31,10 +32,10 @@ export const getAllBySucursal = async (req, res) => {
   }
 };
 
-export const getAllActivatedBySucursal = async (req, res) => {
+export const getAllActivatedBySucursal = async (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   try {
-    const usuarios = await Usuario.find({ estado: true , sucursal: sucursalId });
+    const usuarios = await Usuario.find({ estado: true, sucursal: sucursalId });
     return res.status(200).json({
       message: "Lista de usuarios activos",
       content: usuarios,
@@ -47,7 +48,7 @@ export const getAllActivatedBySucursal = async (req, res) => {
   }
 };
 
-export const getById = async (req, res) => {
+export const getById = async (req:Request, res:Response)  => {
   const usuarioId = req.params.usuario;
   try {
     const usuario = await Usuario.findById(usuarioId);
@@ -66,7 +67,7 @@ export const getById = async (req, res) => {
   }
 };
 
-export const create = async (req, res) => {
+export const create = async (req:Request, res:Response)  => {
   const usuario = req.body;
   try {
     const newUsuario = await Usuario.create(usuario);
@@ -82,7 +83,7 @@ export const create = async (req, res) => {
   }
 };
 
-export const update = async (req, res) => {
+export const update = async (req:Request, res:Response) => {
   const usuarioId = req.params.usuario;
   const newInfoUsuario = req.body;
   try {
@@ -103,10 +104,10 @@ export const update = async (req, res) => {
   }
 };
 
-export const eliminate = async (req, res) => {
+export const eliminate = async (req:Request, res:Response)  => {
   const usuarioId = req.params.usuario;
   try {
-    const usuarioEliminado = await Usuario.findOneAndDelete(usuarioId);
+    const usuarioEliminado = await Usuario.findByIdAndDelete(usuarioId);
     return res.status(200).json({
       message: "Usuario borrada",
     });

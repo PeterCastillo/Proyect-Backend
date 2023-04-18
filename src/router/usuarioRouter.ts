@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validadorToken } from "../utils/validadorToken.js";
+import { validadorToken } from "../middleware/validadorToken";
 import {
   getAll,
   getAllActivatedBySucursal,
@@ -7,8 +7,8 @@ import {
   eliminate,
   update,
   getAllBySucursal,
-} from "../controllers/usuarioController.js";
-import { registro } from "../controllers/authController.js";
+} from "../controllers/usuarioController";
+import { registro } from "../controllers/authController";
 
 export const usuarioRouter = Router();
 

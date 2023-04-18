@@ -2,15 +2,11 @@ import mongoose from "mongoose";
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import SwaggerUi from "swagger-ui-express";
-import * as path from "path";
-import { authRouter } from "./router/authRouter.js";
-import { sucursalRouter } from "./router/sucursalRouter.js"
-import { usuarioRouter } from "./router/usuarioRouter.js"
-import { fileURLToPath } from "url";
-import cors from "cors"
+import { authRouter } from "./router/authRouter";
+import { sucursalRouter } from "./router/sucursalRouter";
+import { usuarioRouter } from "./router/usuarioRouter";
+import cors from "cors";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -39,7 +35,7 @@ const swaggerOptions = {
       },
     },
   },
-  apis: [`${path.join(__dirname, "./router/*.js")}`],
+  apis: ["./src/router/*.ts"],
 };
 
 const servidor = express();
@@ -51,17 +47,17 @@ servidor.use(
   SwaggerUi.setup(swaggerJSDoc(swaggerOptions))
 );
 // La aplicacion entendera los json provenientes del cliente
-servidor.use(cors())
+servidor.use(cors());
 servidor.use(express.json());
 servidor.use(authRouter);
-servidor.use(sucursalRouter)
-servidor.use(usuarioRouter)
+servidor.use(sucursalRouter);
+servidor.use(usuarioRouter);
 
 servidor.listen(PORT, async () => {
-  console.log(`Servidor Iniciado Correctamente en el Puerto: ${PORT}`);
+  console.log(`Servidor Iniciado Correctamente :  http://localhost:${PORT}/api-docs/`);
   try {
     mongoose.set("strictQuery", false);
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URL ?? "");
     console.log("conexion de la base de datos exitosa");
   } catch (e) {
     console.log(e);
