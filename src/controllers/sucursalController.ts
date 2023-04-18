@@ -1,7 +1,7 @@
 import { Sucursal } from "../models/sucursalModel";
 import { Request, Response } from "express";
 
-export const getAll = async (req:Request, res:Response)  => {
+export const getAll = async (req: Request, res: Response) => {
   try {
     const sucursales = await Sucursal.find();
     return res.status(200).json({
@@ -16,7 +16,7 @@ export const getAll = async (req:Request, res:Response)  => {
   }
 };
 
-export const getAllActivated = async (req:Request, res:Response)  => {
+export const getAllActivated = async (req: Request, res: Response) => {
   try {
     const sucursales = await Sucursal.find({ estado: true });
     return res.status(200).json({
@@ -31,7 +31,7 @@ export const getAllActivated = async (req:Request, res:Response)  => {
   }
 };
 
-export const getById = async (req:Request, res:Response)  => {
+export const getById = async (req: Request, res: Response) => {
   const sucursalId = req.params.sucursal;
   try {
     const sucursal = await Sucursal.findById(sucursalId);
@@ -50,17 +50,16 @@ export const getById = async (req:Request, res:Response)  => {
   }
 };
 
-export const create = async  (req:Request, res:Response) => {
+export const create = async (req: Request, res: Response) => {
   const sucursal = req.body;
   try {
-    const sucursales = await Sucursal.find()
-    for (let index = 0; index < sucursales.length; index++) {
-      const element = sucursales[index];
-      if(element.ubicacion == sucursal.ubicacion && element.sucursal == sucursal.sucursal){
-        return res.status(409).json({
-          message: "Sucursal Existente"
-        })
-      }
+    const sucursales = await Sucursal.find({
+      $or: [{ sucursal: sucursal.sucursal }, { ubicacion: sucursal.ubicacion }],
+    });
+    if (sucursales.length) {
+      return res
+        .status(400)
+        .json({ error: "Ya existe una sucursal con esas caracteristicas" });
     }
     const newSucursal = await Sucursal.create(sucursal);
     return res.status(201).json({
@@ -75,10 +74,18 @@ export const create = async  (req:Request, res:Response) => {
   }
 };
 
-export const update = async  (req:Request, res:Response)  => {
+export const update = async (req: Request, res: Response) => {
   const sucursalId = req.params.sucursal;
   const newInfosucursal = req.body;
   try {
+    const sucursalValidador = await Sucursal.find({
+      $or: [{ sucursal: newInfosucursal.sucursal }, { ubicacion: newInfosucursal.ubicacion }],
+    })
+    if(sucursalValidador.length && sucursalValidador.some((item)=> item._id != sucursalId)){
+      return res
+        .status(400)
+        .json({ error: "Ya existe una empresa con esas caracteristicas" });
+    }
     const updatedSucursal = await Sucursal.findOneAndUpdate(
       { _id: sucursalId },
       { $set: newInfosucursal },
@@ -96,7 +103,7 @@ export const update = async  (req:Request, res:Response)  => {
   }
 };
 
-export const eliminate = async  (req:Request, res:Response)  => {
+export const eliminate = async (req: Request, res: Response) => {
   const sucursalId = req.params.sucursal;
   try {
     const updatedSucursal = await Sucursal.findByIdAndDelete(sucursalId);

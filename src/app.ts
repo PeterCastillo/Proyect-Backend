@@ -6,6 +6,7 @@ import { authRouter } from "./router/authRouter";
 import { sucursalRouter } from "./router/sucursalRouter";
 import { usuarioRouter } from "./router/usuarioRouter";
 import cors from "cors";
+import { empresaRouter } from "./router/empresaRouter";
 
 
 const swaggerOptions = {
@@ -52,6 +53,7 @@ servidor.use(express.json());
 servidor.use(authRouter);
 servidor.use(sucursalRouter);
 servidor.use(usuarioRouter);
+servidor.use(empresaRouter)
 
 servidor.listen(PORT, async () => {
   console.log(`Servidor Iniciado Correctamente :  http://localhost:${PORT}/api-docs/`);
