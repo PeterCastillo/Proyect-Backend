@@ -19,7 +19,7 @@ export const getAll = async (req: Request, res: Response) => {
 export const getAllBySucursal = async (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   try {
-    const usuarios = await Usuario.find({ sucursal: sucursalId });
+    const usuarios = await Usuario.find({ sucursal_id: sucursalId });
     return res.status(200).json({
       message: "Lista de usuarios activos",
       content: usuarios,
@@ -35,7 +35,7 @@ export const getAllBySucursal = async (req:Request, res:Response)  => {
 export const getAllActivatedBySucursal = async (req:Request, res:Response)  => {
   const sucursalId = req.params.sucursal;
   try {
-    const usuarios = await Usuario.find({ estado: true, sucursal: sucursalId });
+    const usuarios = await Usuario.find({ estado: true, sucursal_id: sucursalId });
     return res.status(200).json({
       message: "Lista de usuarios activos",
       content: usuarios,
