@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { IUsuario } from "../interfaces/usuarioInterface";
 
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -28,4 +29,4 @@ const usuarioSchema = new mongoose.Schema({
     }
 })
 
-export const Usuario = mongoose.model('usuarios', usuarioSchema)
+export const Usuario = mongoose.model<IUsuario>('usuarios', usuarioSchema)

@@ -7,6 +7,7 @@ import {
   create,
   eliminate,
   update,
+  getAllBySucursal,
 } from "../controllers/sucursalController";
 
 export const sucursalRouter = Router();
@@ -49,8 +50,6 @@ export const sucursalRouter = Router();
  * @swagger
  * /sucursales:
  *  get:
- *      security:
- *          - Authorization: []
  *      summary: Obtener lista de Sucursales
  *      tags: [Sucursal]
  *      responses:
@@ -238,9 +237,47 @@ export const sucursalRouter = Router();
  *
  */
 
-sucursalRouter.get("/sucursales", validadorToken, getAll);
+
+/**
+ * @swagger
+ * /sucursales_empresa/{sucursal}:
+ *  get:
+ *      security:
+ *          - Authorization: []
+ *      summary: Obtener lista de Sucursales por empresa
+ *      tags: [Sucursal]
+ *      parameters:
+ *          - in: path
+ *            name: sucursal
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: sucursal_id
+ *      responses:
+ *          200:
+ *              description: Lista de Sucursales por empresa
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                        type: object
+ *                        properties:
+ *                          message:
+ *                            type: string
+ *                            example: Lista de sucursales por empresa
+ *                          content:
+ *                            type: array
+ *                            items:
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Sucursal_id'
+ *                                - $ref: '#/components/schemas/Sucursal'
+ */
+
+
+sucursalRouter.get("/sucursales", getAll);
 sucursalRouter.get("/sucursales_activas", validadorToken, getAllActivated);
 sucursalRouter.get("/sucursales/:sucursal", validadorToken, getById);
+sucursalRouter.get("/sucursales_empresa/:sucursal", validadorToken, getAllBySucursal)
 sucursalRouter.post("/sucursales", validadorToken, create);
 sucursalRouter.put("/sucursales/:sucursal", validadorToken, update);
 sucursalRouter.delete("/sucursales/:sucursal", validadorToken, eliminate);
+
