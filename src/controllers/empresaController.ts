@@ -22,7 +22,7 @@ export const create = async (req: Request, res: Response) => {
     const empresaValidador = await Empresa.findOne({ nombre: empresa.nombre });
     if (empresaValidador) {
       return res
-        .status(400)
+        .status(409)
         .json({ error: "Ya existe una empresa con esas caracteristicas" });
     }
     const newEmpresa = await Empresa.create(empresa);
@@ -45,7 +45,7 @@ export const update = async (req: Request, res: Response) => {
     const empresaValidador = await Empresa.findOne({nombre: newInfoEmpresa.nombre})
     if(empresaValidador && empresaValidador._id.toString() != empresaId){
       return res
-        .status(400)
+        .status(409)
         .json({ error: "Ya existe una empresa con esas caracteristicas" });
     }
     const updatedEmpresa = await Empresa.findOneAndUpdate(

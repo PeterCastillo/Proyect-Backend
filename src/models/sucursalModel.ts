@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { ISucrusal } from "../interfaces/sucursalInterface";
+import { Empresa } from "./empresaModel";
 
 const sucursalSchema = new mongoose.Schema({
     sucursal: {
@@ -18,7 +19,8 @@ const sucursalSchema = new mongoose.Schema({
     },
     empresa_id: {
         type: mongoose.Schema.Types.String,
-        require: true
+        require: true,
+        ref: Empresa
     },
 
 })

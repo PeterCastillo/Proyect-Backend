@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { IUsuario } from "../interfaces/usuarioInterface";
+import { Sucursal } from "./sucursalModel";
 
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -16,7 +17,8 @@ const usuarioSchema = new mongoose.Schema({
     },
     sucursal_id: {
         type: mongoose.Schema.Types.String,
-        required: true
+        required: true,
+        ref: Sucursal
     },
     accesos: {
         type: [mongoose.Schema.Types.String]

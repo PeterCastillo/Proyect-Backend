@@ -1,4 +1,3 @@
-import { Empresa } from "../models/empresaModel";
 import { Sucursal } from "../models/sucursalModel";
 import { Request, Response } from "express";
 
@@ -37,7 +36,7 @@ export const getById = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(400).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ error: "Sucursal no existe" });
     }
     return res.status(200).json({
       message: "Sucursal obtenida",
@@ -59,7 +58,7 @@ export const create = async (req: Request, res: Response) => {
     });
     if (sucursales.length) {
       return res
-        .status(400)
+        .status(409)
         .json({ error: "Ya existe una sucursal con esas caracteristicas" });
     }
     const newSucursal = await Sucursal.create(sucursal);
@@ -90,7 +89,7 @@ export const update = async (req: Request, res: Response) => {
       sucursalValidador.some((item) => item._id != sucursalId)
     ) {
       return res
-        .status(400)
+        .status(409)
         .json({ error: "Ya existe una empresa con esas caracteristicas" });
     }
     const updatedSucursal = await Sucursal.findOneAndUpdate(
@@ -115,7 +114,7 @@ export const eliminate = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findOne({ sucursal: sucursalId });
     if (!sucursal) {
-      return res.status(400).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ error: "Sucursal no existe" });
     }
     const deletedSucursal = await Sucursal.findByIdAndDelete(sucursalId);
     return res.status(200).json({
@@ -132,9 +131,9 @@ export const eliminate = async (req: Request, res: Response) => {
 export const getAllBySucursal = async (req: Request, res: Response) => {
   const sucursalId = req.params.sucursal;
   try {
-    const sucursal = await Sucursal.findOne({ sucursal: sucursalId });
+    const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(400).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ error: "Sucursal no existe" });
     }
     const sucursales = await Sucursal.find({ empresa_id: sucursal.empresa_id });
     return res.status(200).json({
