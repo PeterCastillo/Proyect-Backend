@@ -59,51 +59,56 @@ export const usuarioRouter = Router();
  *              accesos: ["usuarios", "mesas", "platillos"]
  */
 
-/**
- * @swagger
- * /usuarios:
- *  get:
- *      security:
- *          - Authorization: []
- *      summary: Obtener lista de Usuarios
- *      tags: [Usuario]
- *      responses:
- *          200:
- *              description: Lista de Sucursales
- *              content:
- *                  application/json:
- *                      schema:
- *                        type: object
- *                        properties:
- *                          message:
- *                            type: string
- *                            example: Lista de Usuarios
- *                          content:
- *                            type: array
- *                            items:
- *                              allOf:
- *                                - $ref: '#/components/schemas/Usuario_id'
- *                                - $ref: '#/components/schemas/Usuario'
- */
+// /**
+//  * @swagger
+//  * /usuarios:
+//  *  get:
+//  *      security:
+//  *          - Authorization: []
+//  *      summary: Obtener lista de Usuarios
+//  *      tags: [Usuario]
+//  *      responses:
+//  *          200:
+//  *              description: Lista de Sucursales
+//  *              content:
+//  *                  application/json:
+//  *                      schema:
+//  *                        type: object
+//  *                        properties:
+//  *                          message:
+//  *                            type: string
+//  *                            example: Lista de Usuarios
+//  *                          content:
+//  *                            type: array
+//  *                            items:
+//  *                              allOf:
+//  *                                - $ref: '#/components/schemas/Usuario_id'
+//  *                                - $ref: '#/components/schemas/Usuario'
+//  */
 
 /**
  * @swagger
- * /usuarios/{sucursal}:
+ * /usuarios/{sucursal}/{all}:
  *  get:
- *      security:
- *          - Authorization: []
- *      summary: Obtener lista de Usuarios Activos
+ *      summary: Obtener lista de Usuarios por sucursal o  por empresa
  *      tags: [Usuario]
  *      parameters:
- *          - in: path
- *            name: sucursal
- *            schema:
- *              type: string
- *            required: true
- *            description: sucursal_id
+ *        - in: path
+ *          name: sucursal
+ *          schema:
+ *            type: string
+ *          required: true
+ *        - in: path
+ *          name: all
+ *          schema:
+ *            type: string
+ *            enum:
+ *              - "all=true"
+ *              - "all=false"
+ *          required: true
  *      responses:
  *          200:
- *              description: Lista de Usuarios Activos
+ *              description: Lista de Usuarios por sucursal o empresa
  *              content:
  *                  application/json:
  *                      schema:
@@ -126,7 +131,7 @@ export const usuarioRouter = Router();
  *  get:
  *      security:
  *          - Authorization: []
- *      summary: Obtener lista de Usuarios Activos
+ *      summary: Obtener lista de Usuarios Activos por sucursal
  *      tags: [Usuario]
  *      parameters:
  *          - in: path
@@ -137,7 +142,7 @@ export const usuarioRouter = Router();
  *            description: sucursal_id
  *      responses:
  *          200:
- *              description: Lista de Usuarios Activos
+ *              description: Lista de Usuarios Activos por sucursal
  *              content:
  *                  application/json:
  *                      schema:
@@ -294,7 +299,7 @@ export const usuarioRouter = Router();
  */
 
 usuarioRouter.get("/usuarios", validadorToken, getAll);
-usuarioRouter.get("/usuarios/:sucursal&:all", validadorToken, getAllBySucursal)
+usuarioRouter.get("/usuarios/:sucursal/:all", getAllBySucursal)
 usuarioRouter.get("/usuarios_activos/:sucursal", validadorToken, getAllActivatedBySucursal);
 usuarioRouter.get("/usuarios/:usuario", validadorToken, getById);
 usuarioRouter.post("/usuarios", validadorToken, registro);

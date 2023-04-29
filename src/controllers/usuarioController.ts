@@ -19,24 +19,24 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 export const getAllBySucursal = async (req: Request, res: Response) => {
-  const sucursalId = req.params.sucursal.split("=")[1];
+  const sucursalId = req.params.sucursal;
   const all = req.params.all.split("=")[1] === "true";
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
       return res.status(404).json({ error: "No se encontró la sucursal" });
     }
-    const usuarios = await Usuario.find(
-      all ? {} : { sucursal_id: sucursalId }
-    ).populate({
-      path: "sucursal_id",
-      match: { empresa_id: sucursal.empresa_id},
-    });
+    const usuarios = await Usuario.find(all ? {} : { sucursal_id: sucursalId })
+      .populate({
+        path: "sucursal_id",
+        match: { empresa_id: sucursal.empresa_id },
+        options: { retainNullValues: false }
+      })
     return res.status(200).json({
       message: all
         ? "Lista de usuarios activos de la empresa"
         : "Lista de usuarios activos de la empresa",
-      content: usuarios,
+      content: usuarios.filter((item) => item.sucursal_id),
     });
   } catch (e) {
     res.status(500).json({
