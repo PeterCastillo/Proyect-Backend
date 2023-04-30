@@ -18,7 +18,7 @@ const sucursalSchema = new mongoose.Schema({
         require: true
     },
     empresa_id: {
-        type: mongoose.Schema.Types.String,
+        type: mongoose.Schema.Types.ObjectId,
         require: true,
         ref: Empresa
     },

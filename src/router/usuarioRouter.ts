@@ -16,10 +16,10 @@ export const usuarioRouter = Router();
  * @swagger
  * components:
  *  schemas:
- *      Token:  
+ *      Token:
  *        type: object
  *        properties:
- *          token: 
+ *          token:
  *            type: string
  *        example:
  *          token:
@@ -299,8 +299,12 @@ export const usuarioRouter = Router();
  */
 
 usuarioRouter.get("/usuarios", validadorToken, getAll);
-usuarioRouter.get("/usuarios/:sucursal/:all", getAllBySucursal)
-usuarioRouter.get("/usuarios_activos/:sucursal", validadorToken, getAllActivatedBySucursal);
+usuarioRouter.get("/usuarios/:sucursal/:all", validadorToken, getAllBySucursal);
+usuarioRouter.get(
+  "/usuarios_activos/:sucursal",
+  validadorToken,
+  getAllActivatedBySucursal
+);
 usuarioRouter.get("/usuarios/:usuario", validadorToken, getById);
 usuarioRouter.post("/usuarios", validadorToken, registro);
 usuarioRouter.put("/usuarios/:usuario", validadorToken, update);

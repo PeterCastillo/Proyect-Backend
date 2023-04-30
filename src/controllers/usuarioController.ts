@@ -26,12 +26,28 @@ export const getAllBySucursal = async (req: Request, res: Response) => {
     if (!sucursal) {
       return res.status(404).json({ error: "No se encontró la sucursal" });
     }
-    const usuarios = await Usuario.find(all ? {} : { sucursal_id: sucursalId })
-      .populate({
-        path: "sucursal_id",
-        match: { empresa_id: sucursal.empresa_id },
-        options: { retainNullValues: false }
-      })
+    const usuarios = await Usuario.aggregate([
+      {
+        $match: all ? {} : { sucursal_id: sucursal._id },
+      },
+      {
+        $lookup: {
+          from: "sucursales",
+          let: { sucursal_id: "$sucursal_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$_id", "$$sucursal_id"] },
+                empresa_id: sucursal.empresa_id,
+              },
+            },
+          ],
+          as: "sucursal",
+        },
+      },
+      { $unwind: "$sucursal" },
+    ]);
+
     return res.status(200).json({
       message: all
         ? "Lista de usuarios activos de la empresa"

@@ -16,7 +16,7 @@ const usuarioSchema = new mongoose.Schema({
         required: true
     },
     sucursal_id: {
-        type: mongoose.Schema.Types.String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: Sucursal
     },
