@@ -59,37 +59,39 @@ export const usuarioRouter = Router();
  *              accesos: ["usuarios", "mesas", "platillos"]
  */
 
-// /**
-//  * @swagger
-//  * /usuarios:
-//  *  get:
-//  *      security:
-//  *          - Authorization: []
-//  *      summary: Obtener lista de Usuarios
-//  *      tags: [Usuario]
-//  *      responses:
-//  *          200:
-//  *              description: Lista de Sucursales
-//  *              content:
-//  *                  application/json:
-//  *                      schema:
-//  *                        type: object
-//  *                        properties:
-//  *                          message:
-//  *                            type: string
-//  *                            example: Lista de Usuarios
-//  *                          content:
-//  *                            type: array
-//  *                            items:
-//  *                              allOf:
-//  *                                - $ref: '#/components/schemas/Usuario_id'
-//  *                                - $ref: '#/components/schemas/Usuario'
-//  */
+/**
+ * @swagger
+ * /usuarios:
+ *  get:
+ *      security:
+ *          - Authorization: []
+ *      summary: Obtener lista de Usuarios
+ *      tags: [Usuario]
+ *      responses:
+ *          200:
+ *              description: Lista de Sucursales
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                        type: object
+ *                        properties:
+ *                          message:
+ *                            type: string
+ *                            example: Lista de Usuarios
+ *                          content:
+ *                            type: array
+ *                            items:
+ *                              allOf:
+ *                                - $ref: '#/components/schemas/Usuario_id'
+ *                                - $ref: '#/components/schemas/Usuario'
+ */
 
 /**
  * @swagger
  * /usuarios/{sucursal}/{all}:
  *  get:
+ *      security:
+ *        - Authorization: []
  *      summary: Obtener lista de Usuarios por sucursal o  por empresa
  *      tags: [Usuario]
  *      parameters:
