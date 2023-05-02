@@ -88,7 +88,7 @@ export const usuarioRouter = Router();
 
 /**
  * @swagger
- * /usuarios/{sucursal}/{all}:
+ * /usuarios/{sucursal}:
  *  get:
  *      security:
  *        - Authorization: []
@@ -100,13 +100,13 @@ export const usuarioRouter = Router();
  *          schema:
  *            type: string
  *          required: true
- *        - in: path
+ *        - in: query
  *          name: all
  *          schema:
  *            type: string
  *            enum:
- *              - "all=true"
- *              - "all=false"
+ *              - "true"
+ *              - "false"
  *          required: true
  *      responses:
  *          200:
@@ -301,7 +301,7 @@ export const usuarioRouter = Router();
  */
 
 usuarioRouter.get("/usuarios", validadorToken, getAll);
-usuarioRouter.get("/usuarios/:sucursal/:all", validadorToken, getAllBySucursal);
+usuarioRouter.get("/usuarios/:sucursal", getAllBySucursal);
 usuarioRouter.get(
   "/usuarios_activos/:sucursal",
   validadorToken,

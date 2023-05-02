@@ -20,7 +20,7 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const getAllBySucursal = async (req: Request, res: Response) => {
   const sucursalId = req.params.sucursal;
-  const all = req.params.all.split("=")[1] === "true";
+  const all = req.query.all === "true";
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
