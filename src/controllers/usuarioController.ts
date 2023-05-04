@@ -1,4 +1,4 @@
-import { Empresa } from "../models/empresaModel";
+import bcryptjs from "bcryptjs";
 import { Sucursal } from "../models/sucursalModel";
 import { Usuario } from "../models/usuarioModel";
 import { Request, Response } from "express";
@@ -106,16 +106,26 @@ export const getById = async (req: Request, res: Response) => {
 };
 
 export const create = async (req: Request, res: Response) => {
-  const usuario = req.body;
+  const data = req.body;
   try {
-    const newUsuario = await Usuario.create(usuario);
-    return res.status(201).json({
-      message: "Usuario creada",
-      content: newUsuario,
+    const validaroCorreo = await Usuario.findOne({ correo: data.correo });
+    if (validaroCorreo) {
+      return res.status(409).json({
+        message: "Correo registrado",
+      });
+    }
+    const contrasena = bcryptjs.hashSync(data.contrasena, 10);
+    const nuevoUsuario = await Usuario.create({
+      ...data,
+      contrasena,
+    });
+    res.status(201).json({
+      message: "Usuario creado exitosamente",
+      content: nuevoUsuario,
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al crear usuario",
+      message: "Error al crear el usuario",
       content: e.message,
     });
   }
@@ -127,9 +137,26 @@ export const update = async (req: Request, res: Response) => {
   try {
     const updateUsuario = await Usuario.findOneAndUpdate(
       { _id: usuarioId },
-      { $set: newInfoUsuario },
+      {
+        $set: newInfoUsuario.contrasena
+          ? {
+              ...newInfoUsuario,
+              contrasena: bcryptjs.hashSync(newInfoUsuario.contrasena, 10),
+            }
+          : {
+              nombre: newInfoUsuario.nombre,
+              correo: newInfoUsuario.correo,
+              accesos: newInfoUsuario.accesos,
+              sucursal_id: newInfoUsuario.sucursal_id,
+            },
+      },
       { new: true }
     );
+    if (!updateUsuario) {
+      return res
+        .status(409)
+        .json({ error: "No existe un usuario con esas caracteristicas" });
+    }
     return res.status(200).json({
       message: "Usuario actuzalizada",
       content: updateUsuario,

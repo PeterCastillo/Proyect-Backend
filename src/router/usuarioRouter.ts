@@ -7,8 +7,8 @@ import {
   eliminate,
   update,
   getAllBySucursal,
+  create,
 } from "../controllers/usuarioController";
-import { registro } from "../controllers/authController";
 
 export const usuarioRouter = Router();
 
@@ -308,6 +308,6 @@ usuarioRouter.get(
   getAllActivatedBySucursal
 );
 usuarioRouter.get("/usuarios/:usuario", validadorToken, getById);
-usuarioRouter.post("/usuarios", validadorToken, registro);
+usuarioRouter.post("/usuarios", validadorToken, create);
 usuarioRouter.put("/usuarios/:usuario", validadorToken, update);
 usuarioRouter.delete("/usuarios/:usuario", validadorToken, eliminate);
