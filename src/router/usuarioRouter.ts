@@ -63,8 +63,6 @@ export const usuarioRouter = Router();
  * @swagger
  * /usuarios:
  *  get:
- *      security:
- *          - Authorization: []
  *      summary: Obtener lista de Usuarios
  *      tags: [Usuario]
  *      responses:
@@ -235,7 +233,7 @@ export const usuarioRouter = Router();
  *  put:
  *      security:
  *          - Authorization: []
- *      summary: Editar sucursal
+ *      summary: Editar Usuario
  *      tags: [Usuario]
  *      parameters:
  *          - in: path
@@ -300,7 +298,7 @@ export const usuarioRouter = Router();
  *
  */
 
-usuarioRouter.get("/usuarios", validadorToken, getAll);
+usuarioRouter.get("/usuarios", getAll);
 usuarioRouter.get("/usuarios/:sucursal", getAllBySucursal);
 usuarioRouter.get(
   "/usuarios_activos/:sucursal",
