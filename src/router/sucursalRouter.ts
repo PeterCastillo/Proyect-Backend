@@ -73,10 +73,17 @@ export const sucursalRouter = Router();
 
 /**
  * @swagger
- * /sucursales_activas:
+ * /sucursales_activas/{sucursal}:
  *  get:
  *      security:
  *          - Authorization: []
+ *      parameters:
+ *        - in: path
+ *          name: sucursal
+ *          schema:
+ *            type: string
+ *          required: true
+ *          description: sucursal_id
  *      summary: Obtener lista de Sucursales Activas
  *      tags: [Sucursal]
  *      responses:
@@ -274,7 +281,7 @@ export const sucursalRouter = Router();
 
 
 sucursalRouter.get("/sucursales", getAll);
-sucursalRouter.get("/sucursales_activas", validadorToken, getAllActivated);
+sucursalRouter.get("/sucursales_activas/:sucursal", getAllActivated);
 sucursalRouter.get("/sucursales/:sucursal", validadorToken, getById);
 sucursalRouter.get("/sucursales_empresa/:sucursal", validadorToken, getAllBySucursal)
 sucursalRouter.post("/sucursales", validadorToken, create);

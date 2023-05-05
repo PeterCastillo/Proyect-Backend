@@ -17,8 +17,16 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 export const getAllActivated = async (req: Request, res: Response) => {
+  const sucursalId = req.params.sucursal;
   try {
-    const sucursales = await Sucursal.find({ estado: true });
+    const sucursal = await Sucursal.findById(sucursalId);
+    if (!sucursal) {
+      return res.status(404).json({ error: "No se encontró la sucursal" });
+    }
+    const sucursales = await Sucursal.find({
+      empresa_id: sucursal.empresa_id,
+      estado: true,
+    });
     return res.status(200).json({
       message: "Lista de sucursales activas",
       content: sucursales,
