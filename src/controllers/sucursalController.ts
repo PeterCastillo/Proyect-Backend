@@ -105,6 +105,9 @@ export const update = async (req: Request, res: Response) => {
       { $set: newInfosucursal },
       { new: true }
     );
+    if (!updatedSucursal) {
+      return res.status(404).json({ error: "Sucursal no existe" });
+    }
     return res.status(200).json({
       message: "Sucursal actuzalizada",
       content: updatedSucursal,
@@ -126,7 +129,7 @@ export const eliminate = async (req: Request, res: Response) => {
     }
     const deletedSucursal = await Sucursal.findByIdAndDelete(sucursalId);
     return res.status(200).json({
-      message: "Sucursal borrada",
+      message: "Sucursal eliminada",
     });
   } catch (e) {
     res.status(500).json({

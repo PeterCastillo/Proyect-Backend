@@ -12,7 +12,7 @@ export const getAll = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener todas los usuarios",
+      message: "Error al obtener usuarios",
       content: e.message,
     });
   }
@@ -24,7 +24,7 @@ export const getAllBySucursal = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "No se encontró la sucursal" });
+      return res.status(404).json({ error: "Sucursal no existe" });
     }
     const usuarios = await Usuario.aggregate([
       {
@@ -56,7 +56,7 @@ export const getAllBySucursal = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener todas los usuarios",
+      message: "Error al obtener usuarios",
       content: e.message,
     });
   }
@@ -68,6 +68,10 @@ export const getAllActivatedBySucursal = async (
 ) => {
   const sucursalId = req.params.sucursal;
   try {
+    const sucursal = await Sucursal.findById(sucursalId);
+    if (!sucursal) {
+      return res.status(404).json({ error: "Sucursal no existe" });
+    }
     const usuarios = await Usuario.find({
       estado: true,
       sucursal_id: sucursalId,
@@ -78,7 +82,7 @@ export const getAllActivatedBySucursal = async (
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener todas los usuarios",
+      message: "Error al obtener usuarios",
       content: e.message,
     });
   }
@@ -89,9 +93,7 @@ export const getById = async (req: Request, res: Response) => {
   try {
     const usuario = await Usuario.findById(usuarioId);
     if (!usuario) {
-      return res
-        .status(409)
-        .json({ error: "No existe un usuario con esas caracteristicas" });
+      return res.status(404).json({ error: "Usuario no existe" });
     }
     return res.status(200).json({
       message: "Usuario obtenido",
@@ -135,6 +137,12 @@ export const update = async (req: Request, res: Response) => {
   const usuarioId = req.params.usuario;
   const newInfoUsuario = req.body;
   try {
+    const usuairos = await Usuario.find({ correo: newInfoUsuario.correo});
+    if (usuairos.length && usuairos.some(item => item._id != usuarioId)) {
+      return res
+        .status(409)
+        .json({ error: "Ya existe un Usuario con esas caracteristicas" });
+    }
     const updateUsuario = await Usuario.findOneAndUpdate(
       { _id: usuarioId },
       {
@@ -153,9 +161,7 @@ export const update = async (req: Request, res: Response) => {
       { new: true }
     );
     if (!updateUsuario) {
-      return res
-        .status(409)
-        .json({ error: "No existe un usuario con esas caracteristicas" });
+      return res.status(404).json({ error: "Usuario no existe" });
     }
     return res.status(200).json({
       message: "Usuario actuzalizada",
@@ -163,7 +169,7 @@ export const update = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener usuario",
+      message: "Error al actuzalizada usuario",
       content: e.message,
     });
   }
@@ -173,12 +179,15 @@ export const eliminate = async (req: Request, res: Response) => {
   const usuarioId = req.params.usuario;
   try {
     const usuarioEliminado = await Usuario.findByIdAndDelete(usuarioId);
+    if (!usuarioEliminado) {
+      return res.status(404).json({ error: "Usuario no existe" });
+    }
     return res.status(200).json({
-      message: "Usuario borrada",
+      message: "Usuario eliminado",
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener usuairo",
+      message: "Error al eliminar usuairo",
       content: e.message,
     });
   }

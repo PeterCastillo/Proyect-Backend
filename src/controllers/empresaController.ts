@@ -32,7 +32,7 @@ export const create = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al crear sucursal",
+      message: "Error al crear empresa",
       content: e.message,
     });
   }
@@ -42,8 +42,10 @@ export const update = async (req: Request, res: Response) => {
   const empresaId = req.params.empresa;
   const newInfoEmpresa = req.body;
   try {
-    const empresaValidador = await Empresa.findOne({nombre: newInfoEmpresa.nombre})
-    if(empresaValidador && empresaValidador._id.toString() != empresaId){
+    const empresaValidador = await Empresa.findOne({
+      nombre: newInfoEmpresa.nombre,
+    });
+    if (empresaValidador && empresaValidador._id.toString() != empresaId) {
       return res
         .status(409)
         .json({ error: "Ya existe una empresa con esas caracteristicas" });
@@ -51,11 +53,11 @@ export const update = async (req: Request, res: Response) => {
     const updatedEmpresa = await Empresa.findOneAndUpdate(
       { _id: empresaId },
       { $set: newInfoEmpresa },
-      { new: true },
+      { new: true }
     );
     return res.status(200).json({
-      message: "Empresa actuzalizada", 
-      content: updatedEmpresa, 
+      message: "Empresa actuzalizada",
+      content: updatedEmpresa,
     });
   } catch (e) {
     res.status(500).json({
@@ -68,7 +70,10 @@ export const update = async (req: Request, res: Response) => {
 export const eliminate = async (req: Request, res: Response) => {
   const empresaId = req.params.empresa;
   try {
-    const updatedSucursal = await Empresa.findByIdAndDelete(empresaId);
+    const empresa = await Empresa.findByIdAndDelete(empresaId);
+    if (!empresa) {
+      return res.status(404).json({ error: "Empresa no existe" });
+    }
     return res.status(200).json({
       message: "Empresa borrada",
     });
