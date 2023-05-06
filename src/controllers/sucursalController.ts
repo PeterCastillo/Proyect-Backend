@@ -10,7 +10,7 @@ export const getAll = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener todas las sucursales",
+      message: "Error al obtener sucursales",
       content: e.message,
     });
   }
@@ -21,7 +21,7 @@ export const getAllActivated = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "No se encontró la sucursal" });
+      return res.status(404).json({ error: "Sucursal no existe" });
     }
     const sucursales = await Sucursal.find({
       empresa_id: sucursal.empresa_id,
@@ -33,7 +33,7 @@ export const getAllActivated = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener todas las sucursales",
+      message: "Error al obtener sucursales",
       content: e.message,
     });
   }
@@ -98,7 +98,7 @@ export const update = async (req: Request, res: Response) => {
     ) {
       return res
         .status(409)
-        .json({ error: "Ya existe una empresa con esas caracteristicas" });
+        .json({ error: "Ya existe una sucursal con esas caracteristicas" });
     }
     const updatedSucursal = await Sucursal.findOneAndUpdate(
       { _id: sucursalId },
@@ -111,7 +111,7 @@ export const update = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al actualizar sucursal",
+      message: "Error al actuzalizada sucursal",
       content: e.message,
     });
   }
@@ -150,7 +150,7 @@ export const getAllBySucursal = async (req: Request, res: Response) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al obtener todas las sucursales",
+      message: "Error al obtener sucursales",
       content: e.message,
     });
   }
