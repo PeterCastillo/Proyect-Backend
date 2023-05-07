@@ -23,7 +23,7 @@ export const registro = async (req:Request, res:Response)  => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Error al crear el usuario",
+      message: "Error al crear usuario",
       content: e.message,
     });
   }

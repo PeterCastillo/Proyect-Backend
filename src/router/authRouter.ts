@@ -37,6 +37,29 @@ export const authRouter = Router();
  *                        allOf:
  *                          - $ref: '#/components/schemas/Usuario_id'
  *                          - $ref: '#/components/schemas/Usuario' 
+ *          409:
+ *            description: Conflicto con correo
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string      
+ *                      example: Correo registrado
+ *          500:
+ *            description: Error al crear usuario
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message: 
+ *                      type: string
+ *                      example: Error al crear usuario
+ *                    content: 
+ *                      type: string
+ *                      example: Error
  */
 
 /**
@@ -77,9 +100,38 @@ export const authRouter = Router();
  *                        - $ref: '#/components/schemas/Usuario'  
  *                        - $ref: '#/components/schemas/Token'  
  *          404:
- *              description: Usuario no encontrado
+ *            description: Usuario no encontrado
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Usuario no encontrado
  *          409:
- *              description: Contraseña incorrecta
+ *            description: Contraseña incorrecta
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Contraseña incorrecta
+ *          500:
+ *            description: Error al logear el usuario
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Error al logear el usuario
+ *                    content:
+ *                      type: string
+ *                      example: Error interno del servidor
  *
  */
 
@@ -110,15 +162,36 @@ export const authRouter = Router();
  *                properties:
  *                  message:
  *                    type: string
+ *                    example: Nuevo token
  *                  content:
  *                    type: object
  *                    properties:
  *                      refresedToken:
  *                        type: string
- *                example:
- *                  message: Nuevo token
+ *                        example: 123
+ *        404:
+ *          description: Usuario no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Usuario no encontrado
+ *        500:
+ *          description: Error al logear el usuario
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Error al logear el usuario
  *                  content:
- *                    refresedToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDhmYmFkYzJhMGRkNTQ5ZTk1MDFhYiIsIm5vbWJyZSI6InBldGZlciIsImlhdCI6MTY3OTE4Mjc1MiwiZXhwIjoxNjc5MjY5MTUyfQ.jv9raBd8T6IWDSJja2PTGWMMuEAApKRfU72V_2PCWk
+ *                    type: string
+ *                    example: Error interno del servidor
  */
 
 authRouter.post("/auth/registro", registro);
