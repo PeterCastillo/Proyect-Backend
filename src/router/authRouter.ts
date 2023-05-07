@@ -180,7 +180,7 @@ export const authRouter = Router();
  *                    type: string
  *                    example: Usuario no encontrado
  *        500:
- *          description: Error al logear el usuario
+ *          description: Error al obtener token
  *          content:
  *            application/json:
  *              schema:
@@ -188,7 +188,7 @@ export const authRouter = Router();
  *                properties:
  *                  message:
  *                    type: string
- *                    example: Error al logear el usuario
+ *                    example: Error al obtener token
  *                  content:
  *                    type: string
  *                    example: Error interno del servidor
