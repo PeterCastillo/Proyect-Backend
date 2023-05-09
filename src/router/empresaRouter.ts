@@ -53,6 +53,20 @@ export const empresaRouter = Router();
  *                              allOf:
  *                                - $ref: '#/components/schemas/Empresa_id'
  *                                - $ref: '#/components/schemas/Empresa'
+ *          500:
+ *            description: Error al obtener todas las empresas
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message: 
+ *                      type: string
+ *                      example: Error al obtener todas las empresas
+ *                    content: 
+ *                      type: string
+ *                      example: Error interno del servidor
+ *                    
  */
 
 /**
@@ -84,6 +98,29 @@ export const empresaRouter = Router();
  *                              allOf:
  *                                - $ref: '#/components/schemas/Empresa_id'
  *                                - $ref: '#/components/schemas/Empresa'
+ *          409:
+ *            description: Ya existe una empresa con esas caracteristicas
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Ya existe una empresa con esas caracteristicas
+ *          500:
+ *            description: Error al crear empresa
+ *            content:
+ *              application/json: 
+ *                schema:
+ *                  type: object
+ *                  properties:  
+ *                    message: 
+ *                      type: string
+ *                      example: Error al crear empresa
+ *                    content:
+ *                      type: string
+ *                      example: Error interno del servidor
  */
 
 /**
@@ -124,6 +161,39 @@ export const empresaRouter = Router();
  *                              allOf:
  *                                - $ref: '#/components/schemas/Empresa_id'
  *                                - $ref: '#/components/schemas/Empresa'
+ *          404:
+ *            description: Empresa no existe
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Empresa no existe
+ *          409:
+ *            description: Ya existe una empresa con esas caracteristicas
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Ya existe una empresa con esas caracteristicas
+ *          500:
+ *            description: Error al actualizar empresa
+ *            content:
+ *              application/json: 
+ *                schema:
+ *                  type: object
+ *                  properties:  
+ *                    message: 
+ *                      type: string
+ *                      example: Error al actualizar empresa
+ *                    content:
+ *                      type: string
+ *                      example: Error interno del servidor
  */
 
 /**
@@ -150,7 +220,29 @@ export const empresaRouter = Router();
  *                      message:
  *                        type: string
  *                        example: Empresa borrada
- *
+ *          404:
+ *            description: Empresa no existe
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: Empresa no existe
+ *          500:
+ *            description: Error al eliminar empresa
+ *            content:
+ *              application/json: 
+ *                schema:
+ *                  type: object
+ *                  properties:  
+ *                    message: 
+ *                      type: string
+ *                      example: Error al eliminar empresa
+ *                    content:
+ *                      type: string
+ *                      example: Error interno del servidor
  */
 
 

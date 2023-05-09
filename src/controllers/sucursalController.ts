@@ -67,7 +67,7 @@ export const create = async (req: Request, res: Response) => {
     if (sucursales.length) {
       return res
         .status(409)
-        .json({ error: "Ya existe una sucursal con esas caracteristicas" });
+        .json({ message: "Ya existe una sucursal con esas caracteristicas" });
     }
     const newSucursal = await Sucursal.create(sucursal);
     return res.status(201).json({
@@ -98,7 +98,7 @@ export const update = async (req: Request, res: Response) => {
     ) {
       return res
         .status(409)
-        .json({ error: "Ya existe una sucursal con esas caracteristicas" });
+        .json({ message: "Ya existe una sucursal con esas caracteristicas" });
     }
     const updatedSucursal = await Sucursal.findOneAndUpdate(
       { _id: sucursalId },

@@ -141,7 +141,7 @@ export const update = async (req: Request, res: Response) => {
     if (usuairos.length && usuairos.some(item => item._id != usuarioId)) {
       return res
         .status(409)
-        .json({ error: "Ya existe un Usuario con esas caracteristicas" });
+        .json({ message: "Ya existe un Usuario con esas caracteristicas" });
     }
     const updateUsuario = await Usuario.findOneAndUpdate(
       { _id: usuarioId },

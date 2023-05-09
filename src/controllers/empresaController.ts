@@ -23,7 +23,7 @@ export const create = async (req: Request, res: Response) => {
     if (empresaValidador) {
       return res
         .status(409)
-        .json({ error: "Ya existe una empresa con esas caracteristicas" });
+        .json({ message: "Ya existe una empresa con esas caracteristicas" });
     }
     const newEmpresa = await Empresa.create(empresa);
     return res.status(201).json({
@@ -48,13 +48,16 @@ export const update = async (req: Request, res: Response) => {
     if (empresaValidador && empresaValidador._id.toString() != empresaId) {
       return res
         .status(409)
-        .json({ error: "Ya existe una empresa con esas caracteristicas" });
+        .json({ message: "Ya existe una empresa con esas caracteristicas" });
     }
     const updatedEmpresa = await Empresa.findOneAndUpdate(
       { _id: empresaId },
       { $set: newInfoEmpresa },
       { new: true }
     );
+    if (!updatedEmpresa) {
+      return res.status(404).json({ message: "Empresa no existe" });
+    }
     return res.status(200).json({
       message: "Empresa actuzalizada",
       content: updatedEmpresa,
@@ -72,7 +75,7 @@ export const eliminate = async (req: Request, res: Response) => {
   try {
     const empresa = await Empresa.findByIdAndDelete(empresaId);
     if (!empresa) {
-      return res.status(404).json({ error: "Empresa no existe" });
+      return res.status(404).json({ message: "Empresa no existe" });
     }
     return res.status(200).json({
       message: "Empresa borrada",
