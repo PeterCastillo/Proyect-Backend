@@ -21,7 +21,7 @@ export const getAllActivated = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     const sucursales = await Sucursal.find({
       empresa_id: sucursal.empresa_id,
@@ -44,7 +44,7 @@ export const getById = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     return res.status(200).json({
       message: "Sucursal obtenida",
@@ -106,7 +106,7 @@ export const update = async (req: Request, res: Response) => {
       { new: true }
     );
     if (!updatedSucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     return res.status(200).json({
       message: "Sucursal actuzalizada",
@@ -125,7 +125,7 @@ export const eliminate = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findOne({ sucursal: sucursalId });
     if (!sucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     const deletedSucursal = await Sucursal.findByIdAndDelete(sucursalId);
     return res.status(200).json({
@@ -144,7 +144,7 @@ export const getAllBySucursal = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     const sucursales = await Sucursal.find({ empresa_id: sucursal.empresa_id });
     return res.status(200).json({

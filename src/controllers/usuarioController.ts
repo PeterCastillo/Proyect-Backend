@@ -24,7 +24,7 @@ export const getAllBySucursal = async (req: Request, res: Response) => {
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     const usuarios = await Usuario.aggregate([
       {
@@ -70,7 +70,7 @@ export const getAllActivatedBySucursal = async (
   try {
     const sucursal = await Sucursal.findById(sucursalId);
     if (!sucursal) {
-      return res.status(404).json({ error: "Sucursal no existe" });
+      return res.status(404).json({ message: "Sucursal no existe" });
     }
     const usuarios = await Usuario.find({
       estado: true,
@@ -93,7 +93,7 @@ export const getById = async (req: Request, res: Response) => {
   try {
     const usuario = await Usuario.findById(usuarioId);
     if (!usuario) {
-      return res.status(404).json({ error: "Usuario no existe" });
+      return res.status(404).json({ message: "Usuario no existe" });
     }
     return res.status(200).json({
       message: "Usuario obtenido",
@@ -161,7 +161,7 @@ export const update = async (req: Request, res: Response) => {
       { new: true }
     );
     if (!updateUsuario) {
-      return res.status(404).json({ error: "Usuario no existe" });
+      return res.status(404).json({ message: "Usuario no existe" });
     }
     return res.status(200).json({
       message: "Usuario actuzalizada",
@@ -180,7 +180,7 @@ export const eliminate = async (req: Request, res: Response) => {
   try {
     const usuarioEliminado = await Usuario.findByIdAndDelete(usuarioId);
     if (!usuarioEliminado) {
-      return res.status(404).json({ error: "Usuario no existe" });
+      return res.status(404).json({ message: "Usuario no existe" });
     }
     return res.status(200).json({
       message: "Usuario eliminado",
