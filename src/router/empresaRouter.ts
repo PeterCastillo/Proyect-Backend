@@ -3,7 +3,8 @@ import {
   create,
   eliminate,
   update,
-  getAll
+  getAll,
+  tex
 } from "../controllers/empresaController";
 
 export const empresaRouter = Router();
@@ -250,3 +251,4 @@ empresaRouter.get("/empresas", getAll);
 empresaRouter.post("/empresas", create);
 empresaRouter.put("/empresas/:empresa", update);
 empresaRouter.delete("/empresas/:empresa", eliminate);
+empresaRouter.get("/test", tex)

@@ -87,3 +87,19 @@ export const eliminate = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+export const tex =  async (req: Request, res: Response)  => {
+  console.log("643ed39d965029fe6c5fc73a")
+  const response = await Empresa.aggregate([
+    {
+      $lookup: {
+        from: "sucursales",
+        foreignField: "empresa_id",
+        localField: "_id",
+        as: "sucursales"
+      }
+    }
+  ]);
+  console.log(response)
+}
